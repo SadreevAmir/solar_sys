@@ -1,6 +1,7 @@
 # coding: utf-8
 # license: GPLv3
 
+#
 
 class Star:
     """Тип данных, описывающий звезду.
