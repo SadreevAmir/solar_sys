@@ -2,6 +2,9 @@
 # license: GPLv3
 
 import pygame as pg
+from pygame import draw
+from pygame.draw import circle, polygon
+
 
 """Модуль визуализации.
 Нигде, кроме этого модуля, не используются экранные координаты объектов.
@@ -32,6 +35,7 @@ def calculate_scale_factor(max_distance):
     print('Scale factor:', scale_factor)
 
 
+
 def scale_x(x):
     """Возвращает экранную **x** координату по **x** координате модели.
     Принимает вещественное число, возвращает целое число.
@@ -57,7 +61,7 @@ def scale_y(y):
 
     **y** — y-координата модели.
     """
-    pass  # FIXME
+    return int(y*scale_factor) + window_height//2
 
 
 
@@ -85,4 +89,4 @@ class DrawableObject:
         self.obj = obj
 
     def draw(self, surface):
-            pass  # FIXME
+        circle(surface, self.color, (self.x, self.y), self.R)
