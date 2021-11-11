@@ -4,6 +4,7 @@
 from solar_objects import Star, Planet
 from solar_vis import DrawableObject
 
+
 def read_space_objects_data_from_file(input_filename):
     """Cчитывает данные о космических объектах из файла, создаёт сами объекты
     и вызывает создание их графических образов
@@ -12,7 +13,6 @@ def read_space_objects_data_from_file(input_filename):
 
     **input_filename** — имя входного файла
     """
-
     objects = []
     with open(input_filename, 'r') as input_file:
         for line in input_file:
@@ -53,7 +53,17 @@ def parse_star_parameters(line, star):
 
     **star** — объект звезды.
     """
-    pass  # FIXME: допишите парсер
+    print(line)
+    param = list(line.split())
+    star.R = float(param[1])
+    star.color = param[2]
+    star.m = float(param[3])
+    star.x = float(param[4])
+    star.y = float(param[5])
+    star.Vx = float(param[6])
+    star.Vy = float(param[7])
+    print(param)
+
 
 def parse_planet_parameters(line, planet):
     """Считывает данные о планете из строки.
@@ -73,7 +83,17 @@ def parse_planet_parameters(line, planet):
 
     **planet** — объект планеты.
     """
-    pass  # FIXME: допишите парсер
+    print(line)
+    param = list(line.split())
+    planet.R = float(param[1])
+    planet.color = param[2]
+    planet.m = float(param[3])
+    planet.x = float(param[4])
+    planet.y = float(param[5])
+    planet.Vx = float(param[6])
+    planet.Vy = float(param[7])
+    print(param)
+
 
 def write_space_objects_data_to_file(output_filename, space_objects):
     """Сохраняет данные о космических объектах в файл.
