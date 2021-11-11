@@ -110,7 +110,7 @@ def write_space_objects_data_to_file(output_filename, space_objects):
 
     **space_objects** — список объектов планет и звёзд
     """
-    print(1)
+    print('write_space_objects_data_to_file')
     with open(output_filename, 'a') as out_file:
         for obj in space_objects:
             if obj.tipe == star:
