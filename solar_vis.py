@@ -89,4 +89,4 @@ class DrawableObject:
         self.obj = obj
 
     def draw(self, surface):
-        circle(surface, self.obj.color, (self.obj.x, self.obj.y), self.obj.R)
+        circle(surface, self.obj.color, (scale_x(self.obj.x), scale_y(self.obj.y)), self.obj.R)

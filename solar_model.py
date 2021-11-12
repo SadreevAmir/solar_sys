@@ -42,6 +42,7 @@ def move_space_object(body, dt):
     ay = body.Fy/body.m
     body.y = body.Vy * dt
     body.Vy += ay*dt
+    #print(body.x, " ", body.y)
 
 
 def recalculate_space_objects_positions(space_objects, dt):

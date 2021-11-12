@@ -113,9 +113,9 @@ def write_space_objects_data_to_file(output_filename, space_objects):
     print('write_space_objects_data_to_file')
     with open(output_filename, 'a') as out_file:
         for obj in space_objects:
-            if obj.tipe == star:
+            if obj.type == star:
                 line = 'Star'
-            elif obj.tipe == planet:
+            elif obj.type == planet:
                 line = 'Planet'
             line = line + ' ' + str(obj.R) + ' ' + obj.color + ' ' + str(obj.m) + ' ' + str(obj.x) + ' ' +\
                    str(obj.y) + ' ' + str(obj.Vx) + ' ' + str(obj.Vy)
