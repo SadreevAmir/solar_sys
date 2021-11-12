@@ -58,7 +58,8 @@ def stop_execution():
     global alive
     alive = False
 
-def open_file():
+
+def open_file_solar_solar_system(in_filename="solar_system.txt"):
     """Открывает диалоговое окно выбора имени файла и вызывает
     функцию считывания параметров системы небесных тел из данного файла.
     Считанные объекты сохраняются в глобальный список space_objects
@@ -66,9 +67,38 @@ def open_file():
     global space_objects
     global browser
     global model_time
-
+    print(in_filename)
     model_time = 0.0
-    in_filename = "solar_system.txt"
+    space_objects = read_space_objects_data_from_file(in_filename)
+    max_distance = max([max(abs(obj.obj.x), abs(obj.obj.y)) for obj in space_objects])
+    calculate_scale_factor(max_distance)
+
+
+def open_file_double_star(in_filename = "double_star.txt"):
+    """Открывает диалоговое окно выбора имени файла и вызывает
+    функцию считывания параметров системы небесных тел из данного файла.
+    Считанные объекты сохраняются в глобальный список space_objects
+    """
+    global space_objects
+    global browser
+    global model_time
+    print(in_filename)
+    model_time = 0.0
+    space_objects = read_space_objects_data_from_file(in_filename)
+    max_distance = max([max(abs(obj.obj.x), abs(obj.obj.y)) for obj in space_objects])
+    calculate_scale_factor(max_distance)
+
+
+def open_file_one_satellite(in_filename = "one_satellite.txt"):
+    """Открывает диалоговое окно выбора имени файла и вызывает
+    функцию считывания параметров системы небесных тел из данного файла.
+    Считанные объекты сохраняются в глобальный список space_objects
+    """
+    global space_objects
+    global browser
+    global model_time
+    print(in_filename)
+    model_time = 0.0
     space_objects = read_space_objects_data_from_file(in_filename)
     max_distance = max([max(abs(obj.obj.x), abs(obj.obj.y)) for obj in space_objects])
     calculate_scale_factor(max_distance)
@@ -96,14 +126,20 @@ def init_ui(screen):
     button_play = thorpy.make_button("Play", func=start_execution)
     timer = thorpy.OneLineText("Seconds passed")
 
-    button_load = thorpy.make_button(text="Load a file", func=open_file)
+    button_load_solar_system = thorpy.make_button(text="Load file 'solar_system'", func=open_file_solar_solar_system)
+
+    button_load_double_star = thorpy.make_button(text="Load a file 'double_star'", func=open_file_double_star)
+
+    button_load_one_satellite = thorpy.make_button(text="Load a file 'one_satellite'", func=open_file_one_satellite)
 
     box = thorpy.Box(elements=[
         slider,
         button_pause, 
         button_stop, 
         button_play, 
-        button_load,
+        button_load_solar_system,
+        button_load_double_star,
+        button_load_one_satellite,
         timer])
     reaction1 = thorpy.Reaction(reacts_to=thorpy.constants.THORPY_EVENT,
                                 reac_func=slider_reaction,
@@ -111,19 +147,18 @@ def init_ui(screen):
                                 params={},
                                 reac_name="slider reaction")
     box.add_reaction(reaction1)
-    
     menu = thorpy.Menu(box)
     for element in menu.get_population():
         element.surface = screen
 
-    box.set_topleft((0,0))
+    box.set_topleft((0, 0))
     box.blit()
     box.update()
     return menu, box, timer
 
 def main():
     """Главная функция главного модуля.
-    Создаёт объекты графического дизайна библиотеки tkinter: окно, холст, фрейм с кнопками, кнопки.
+    Создаёт объекты графического дизайна библиотеки pygame: окно, холст, фрейм с кнопками, кнопки.
     """
     
     global physical_time
@@ -139,9 +174,9 @@ def main():
     physical_time = 0
 
     pg.init()
-    
+
     width = 1000
-    height = 900
+    height = 800
     screen = pg.display.set_mode((width, height))
     last_time = time.perf_counter()
     drawer = Drawer(screen)
