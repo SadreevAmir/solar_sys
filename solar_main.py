@@ -67,11 +67,12 @@ def open_file_solar_solar_system(in_filename="solar_system.txt"):
     global space_objects
     global browser
     global model_time
+    k = 0.5
     print(in_filename)
     model_time = 0.0
     space_objects = read_space_objects_data_from_file(in_filename)
     max_distance = max([max(abs(obj.obj.x), abs(obj.obj.y)) for obj in space_objects])
-    calculate_scale_factor(max_distance)
+    calculate_scale_factor(k, max_distance)
 
 
 def open_file_double_star(in_filename = "double_star.txt"):
@@ -79,6 +80,7 @@ def open_file_double_star(in_filename = "double_star.txt"):
     функцию считывания параметров системы небесных тел из данного файла.
     Считанные объекты сохраняются в глобальный список space_objects
     """
+    k = 0.05
     global space_objects
     global browser
     global model_time
@@ -86,7 +88,7 @@ def open_file_double_star(in_filename = "double_star.txt"):
     model_time = 0.0
     space_objects = read_space_objects_data_from_file(in_filename)
     max_distance = max([max(abs(obj.obj.x), abs(obj.obj.y)) for obj in space_objects])
-    calculate_scale_factor(max_distance)
+    calculate_scale_factor(k, max_distance)
 
 
 def open_file_one_satellite(in_filename = "one_satellite.txt"):
@@ -94,6 +96,7 @@ def open_file_one_satellite(in_filename = "one_satellite.txt"):
     функцию считывания параметров системы небесных тел из данного файла.
     Считанные объекты сохраняются в глобальный список space_objects
     """
+    k = 0.3
     global space_objects
     global browser
     global model_time
@@ -101,7 +104,7 @@ def open_file_one_satellite(in_filename = "one_satellite.txt"):
     model_time = 0.0
     space_objects = read_space_objects_data_from_file(in_filename)
     max_distance = max([max(abs(obj.obj.x), abs(obj.obj.y)) for obj in space_objects])
-    calculate_scale_factor(max_distance)
+    calculate_scale_factor(k, max_distance)
 
 def handle_events(events, menu):
     global alive
