@@ -6,6 +6,7 @@ from solar_vis import *
 from solar_model import *
 from solar_input import *
 from solar_objects import *
+from graphics import draw_garphic, graphic
 import thorpy
 import time
 import numpy as np
@@ -27,6 +28,7 @@ time_scale = 1000.0
 
 space_objects = []
 """Список космических объектов."""
+
 
 def execution(delta):
     """Функция исполнения -- выполняется циклически, вызывая обработку всех небесных тел,
@@ -75,6 +77,26 @@ def open_file_solar_solar_system(in_filename="solar_system.txt"):
     calculate_scale_factor(k, max_distance)
 
 
+def calculate_planet_v(space_objects):
+    satellite_vx = None
+    satellite_vy = None
+    if len(space_objects) > 0:
+        satellite_vx = space_objects[1].obj.Vx
+        satellite_vy = space_objects[1].obj.Vy
+        return (satellite_vx**2 + satellite_vy**2)**(1/2)
+
+
+def calculate_planet_r(space_objects):
+    global satellite_r
+    satellite_r = None
+    if len(space_objects) > 0:
+        satellite_r = ((space_objects[1].obj.x - space_objects[0].obj.x)**2
+        + (space_objects[1].obj.y - space_objects[0].obj.y)**2)**(1/2)
+        return satellite_r
+        
+
+
+
 def open_file_double_star(in_filename = "double_star.txt"):
     """Открывает диалоговое окно выбора имени файла и вызывает
     функцию считывания параметров системы небесных тел из данного файла.
@@ -103,7 +125,7 @@ def open_file_one_satellite(in_filename = "one_satellite.txt"):
     print(in_filename)
     model_time = 0.0
     space_objects = read_space_objects_data_from_file(in_filename)
-    max_distance = max([max(abs(obj.obj.x), abs(obj.obj.y)) for obj in space_objects])
+    max_distance = max([max(abs(obj.obj.x),abs(obj.obj.y)) for obj in space_objects])
     calculate_scale_factor(k, max_distance)
 
 def handle_events(events, menu):
@@ -118,7 +140,7 @@ def slider_to_real(val):
 
 def slider_reaction(event):
     global time_scale
-    time_scale = slider_to_real(event.el.get_value())
+    time_scale = 2*slider_to_real(event.el.get_value())
 
 def init_ui(screen):
     global browser
@@ -172,6 +194,7 @@ def main():
     global start_button
     global perform_execution
     global timer
+    global steps
 
     print('Modelling started!')
     physical_time = 0
@@ -180,6 +203,7 @@ def main():
 
     width = 1000
     height = 800
+    steps = 0
     screen = pg.display.set_mode((width, height))
     last_time = time.perf_counter()
     drawer = Drawer(screen)
@@ -193,12 +217,11 @@ def main():
             execution((cur_time - last_time) * time_scale)
             text = "%d seconds passed" % (int(model_time))
             timer.set_text(text)
-
         last_time = cur_time
         drawer.update(space_objects, box)
-        time.sleep(1.0 / 60)
-
+        graphic(calculate_planet_v(space_objects), calculate_planet_r(space_objects), model_time)
     print('Modelling finished!')
+    draw_garphic()
 
 if __name__ == "__main__":
     main()
