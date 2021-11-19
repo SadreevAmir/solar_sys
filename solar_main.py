@@ -138,6 +138,7 @@ def handle_events(events, menu):
         menu.react(event)
         if event.type == pg.QUIT:
             alive = False
+            pause_execution()
 
 def slider_to_real(val):
     return np.exp(5 + val)
@@ -148,7 +149,7 @@ def slider_reaction(event):
 
 def init_ui(screen):
     global browser
-    slider = thorpy.SliderX(100, (-10, 10), "Simulation speed")
+    slider = thorpy.SliderX(100, (0, 10), "Simulation speed")
     slider.user_func = slider_reaction
     button_stop = thorpy.make_button("Quit", func=stop_execution)
     button_pause = thorpy.make_button("Pause", func=pause_execution)
