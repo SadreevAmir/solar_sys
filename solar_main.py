@@ -1,12 +1,13 @@
 # coding: utf-8
 # license: GPLv3
 
+from os import stat, stat_result
 import pygame as pg
 from solar_vis import *
 from solar_model import *
 from solar_input import *
 from solar_objects import *
-from graphics import draw_garphic, graphic
+from graphics import draw_garphic, graphic, stats
 import thorpy
 import time
 import numpy as np
@@ -22,7 +23,7 @@ model_time = 0
 """Физическое время от начала расчёта.
 Тип: float"""
 
-time_scale = 1000.0
+time_scale = 0.0
 """Шаг по времени при моделировании.
 Тип: float"""
 
@@ -70,6 +71,7 @@ def open_file_solar_solar_system(in_filename="solar_system.txt"):
     global browser
     global model_time
     k = 0.5
+    time_scale = 1000.0
     print(in_filename)
     model_time = 0.0
     space_objects = read_space_objects_data_from_file(in_filename)
@@ -107,6 +109,7 @@ def open_file_double_star(in_filename = "double_star.txt"):
     global browser
     global model_time
     print(in_filename)
+    time_scale = 1000.0
     model_time = 0.0
     space_objects = read_space_objects_data_from_file(in_filename)
     max_distance = max([max(abs(obj.obj.x), abs(obj.obj.y)) for obj in space_objects])
@@ -123,6 +126,7 @@ def open_file_one_satellite(in_filename = "one_satellite.txt"):
     global browser
     global model_time
     print(in_filename)
+    time_scale = 1000.0
     model_time = 0.0
     space_objects = read_space_objects_data_from_file(in_filename)
     max_distance = max([max(abs(obj.obj.x),abs(obj.obj.y)) for obj in space_objects])
@@ -222,6 +226,7 @@ def main():
         graphic(calculate_planet_v(space_objects), calculate_planet_r(space_objects), model_time)
     print('Modelling finished!')
     draw_garphic()
+    write_space_objects_data_to_file('statistics.txt', space_objects)
 
 if __name__ == "__main__":
     main()

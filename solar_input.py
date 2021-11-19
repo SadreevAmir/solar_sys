@@ -112,18 +112,17 @@ def write_space_objects_data_to_file(output_filename, space_objects):
     """
     print('write_space_objects_data_to_file')
     with open(output_filename, 'a') as out_file:
-        for obj in space_objects:
-            if obj.type == star:
+        for a in space_objects:
+            if a.obj.type == 'star':
                 line = 'Star'
-            elif obj.type == planet:
+            if a.obj.type == 'planet':
                 line = 'Planet'
-            line = line + ' ' + str(obj.R) + ' ' + obj.color + ' ' + str(obj.m) + ' ' + str(obj.x) + ' ' +\
-                   str(obj.y) + ' ' + str(obj.Vx) + ' ' + str(obj.Vy)
+            line = line + ' ' + str(a.obj.R) + ' ' + a.obj.color + ' ' + str(a.obj.m) + ' ' + str(a.obj.x) + ' ' +\
+                   str(a.obj.y) + ' ' + str(a.obj.Vx) + ' ' + str(a.obj.Vy)
+            print(1)
             out_file.write(line)
             out_file.write("\n")
 
-            # print(out_file, "%s %d %s %f" % ('1', 2, '3', 4.5))
-            # FIXME!
 
 
 if __name__ == "__main__":
